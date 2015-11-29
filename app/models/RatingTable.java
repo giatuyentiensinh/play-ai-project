@@ -172,6 +172,30 @@ public class RatingTable {
 	private double getRMSSimilarity(RatingTable table) {
 		return 1 / (1 + getRMSDistance(table));
 	}
+	
+	private double getMAE(RatingTable table) {
+        double sum_of_abs = 0, diff = 0;
+        int ct = 0;
+
+        for (Rating r1 : this.getRatings()) {
+            Rating r2 = table.getMatchingRating(r1);
+            if (r2 != null) {
+                diff = r1.score - r2.score;
+                sum_of_abs += Math.abs(diff);
+                ct++;
+            }
+        }
+        
+        double result = sum_of_abs;
+        if (ct > 0)
+            result /= ct;
+        
+        return result;
+    }
+    
+    public double getAverageErrors(RatingTable table) {
+        return getMAE(table);
+    }
 
 	/**
 	 * Độ tương đồng giữa 2 người đánh giá hoặc 2 bộ phim

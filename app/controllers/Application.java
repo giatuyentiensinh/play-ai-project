@@ -75,9 +75,12 @@ public class Application extends Controller {
 	public static Result getdata() {
 		List<Integer> item = new ArrayList<Integer>();
 		List<Double> RMSE = new ArrayList<Double>();
+		List<Double> RMSE2 = new ArrayList<Double>();
+		List<Double> MAE = new ArrayList<Double>();
+		List<Double> MAE2 = new ArrayList<Double>();
 		RatingTable data = SaveData.getData();
 		MatrixUsed mu = SaveData.mu;
-		for (int k = 10; k < mu.sVD.rank() / 30; k = k + 5) {
+		for (int k = 5; k < mu.sVD.rank() / 40; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
 			double[] sigVal = mu.sVD.getSingularValues();
@@ -105,6 +108,11 @@ public class Application extends Controller {
 			RatingTable p = rd.predictTestData(data, predictionMethod,
 					numItemNeighbors, numRaterNeighbors, sampleFold,
 					numCrossFolds, printPredictions);
+			RatingTable p2 = rd.predictTestData2(data, predictionMethod,
+					numItemNeighbors, numRaterNeighbors, sampleFold,
+					numCrossFolds, printPredictions);
+					
+			
 			// if (predictAgainstBaseline)
 			// p.addBaseline(rd);
 
@@ -114,12 +122,20 @@ public class Application extends Controller {
 
 			item.add(k);
 			RMSE.add(p.getDistance(data));
+			MAE.add(p.getAverageErrors(data));
+			
+			RMSE2.add(p2.getDistance(data));
+			MAE2.add(p2.getAverageErrors(data));
+			
 			// output.println(k + "::" + p.getDistance(data));
 		}
 
 		ObjectNode node = Json.newObject();
 		node.put("k", Json.toJson(item));
 		node.put("RMSE", Json.toJson(RMSE));
+		node.put("RMSE2", Json.toJson(RMSE2));
+		node.put("MAE", Json.toJson(MAE));
+		node.put("MAE2", Json.toJson(MAE2));
 
 		return ok(node);
 	}
@@ -140,15 +156,24 @@ public class Application extends Controller {
 
 		Collection<Rating> result = ratingDictionary.getItemRecommendations(
 				iduser, predictionMethod, numItemNeighbors);
+		
+		Collection<Rating> result2 = ratingDictionary.getItemRecommendations2(
+				iduser, predictionMethod, numItemNeighbors);
 
 		MatrixUsed matrixUser = SaveData.mu;
 		ArrayList<String> films = new ArrayList<String>();
 		result.forEach(item -> {
 			films.add(matrixUser.itemIndex.get(item.item));
 		});
+		
+		ArrayList<String> films2 = new ArrayList<String>();
+		result2.forEach(item -> {
+			films2.add(matrixUser.itemIndex.get(item.item));
+		});
 
 		ObjectNode node = Json.newObject();
 		node.put("films", Json.toJson(films));
+		node.put("films2", Json.toJson(films2));
 		node.put("userid", iduser);
 		
 		return ok(node);

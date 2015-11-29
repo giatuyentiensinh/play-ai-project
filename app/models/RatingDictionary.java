@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import models.RatingDictionary.Method;
 import models.RatingTable.SimilarityMeasure;
 
 /**
@@ -190,4 +191,15 @@ public class RatingDictionary {
         Collections.sort(result, Rating.Comp);
         return result;
     }
+
+	public Collection<Rating> getItemRecommendations2(String iduser,
+			Method predictionMethod, int numItemNeighbors) {
+		ArrayList<Rating> result = new ArrayList<Rating>();
+        for (int i = 0; i < numitem; i++) {
+			double t = predict2(iduser, itemMatrixIndex.get(new Integer(i) + 1), numItemNeighbors);
+			result.add(new Rating(iduser, itemMatrixIndex.get(new Integer(i) + 1), t));
+		}
+        Collections.sort(result, Rating.Comp);
+        return result;
+	}
 }
