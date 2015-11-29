@@ -161,4 +161,25 @@ public class Application extends Controller {
 		return ok(Json.toJson(result));
 	}
 
+	public static Result tuyen() {
+		List<Integer> k = new ArrayList<Integer>();
+		ArrayList<String> name = new ArrayList<String>();
+
+		for (int i = 0; i < 10; i++) {
+			k.add(i * i);
+			name.add("gia tri i = " + (i + 1));
+		}
+
+		ObjectNode node = Json.newObject();
+		node.put("k", Json.toJson(k));
+		node.put("RMSE", Json.toJson(name));
+
+		return ok(node);
+	}
+
+	public static Result handerFilm() {
+		JsonNode params = request().body().asJson();
+		String filmname = params.get("filmName").asText();
+		return ok(filmname);
+	}
 }

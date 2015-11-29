@@ -7,13 +7,13 @@
 	</head>
 	<body ng-controller="LineCtrl" class="container">
 
-		<form action="" method="GET">
-			<legend>Form title</legend>
+		<form ng-submit="submit()">
+			<legend>Search film</legend>
 			<div class="input-field"> 
 				<div class="form-group">
-					<label class="control-label" for="">Tên film</label>
+					<label class="control-label">Tên film</label>
 					<span class="help-block"></span>
-					<input type="text" class="form-control" placeholder="Nhập tên film">
+					<input type="text" class="form-control" ng-model="film" required>
 				</div>
 			</div>
 			
@@ -29,7 +29,7 @@
 
 
 		<canvas id="line" class="chart chart-line" chart-data="data"
-		  chart-labels="labels" chart-legend="true" chart-series="series"
+		  chart-labels="labels" chart-series="series"
 		  chart-click="onClick" >
 		</canvas> 
 
