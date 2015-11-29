@@ -6,15 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-import Jama.Matrix;
-import models.MatrixUsed;
-import models.Rating;
-import models.RatingDictionary;
-import models.RatingTable;
-import play.Application;
-import play.GlobalSettings;
 import play.Logger;
 import play.Play;
+import Jama.Matrix;
 
 public class SaveData{
 	
