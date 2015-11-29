@@ -5,6 +5,7 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 	$scope.clean = function() {
 		$scope.items = $scope.items2 = [];
 		$scope.user = '';
+		document.getElementById('userlabel').className = '';
 	};
 
 	$http.get('/data')
