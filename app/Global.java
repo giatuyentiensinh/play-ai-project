@@ -6,7 +6,7 @@ public class Global extends GlobalSettings {
 	
 	@Override
 	public void onStart(Application app) {
-		SaveData s = new SaveData();
+		SaveData s = new SaveData(0);
 	}
 
 }

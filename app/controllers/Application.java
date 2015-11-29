@@ -80,6 +80,8 @@ public class Application extends Controller {
 		MatrixUsed mu = SaveData.mu;
 		if(mu==null){
 			Logger.error( " mu == null!!!");
+		} else{
+			Logger.error( " mu.numUser: " + mu.numUser);
 		}
 		for (int k = 10; k < mu.sVD.rank() / 30; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
@@ -129,7 +131,7 @@ public class Application extends Controller {
 	}
 
 	public static Result search() {
-		RatingDictionary ratingDictionary = new RatingDictionary();
+		RatingDictionary ratingDictionary = SaveData.rd;
 		Collection<Rating> result = ratingDictionary.getItemRecommendations(
 				"111", predictionMethod, numItemNeighbors);
 

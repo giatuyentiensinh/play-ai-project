@@ -105,8 +105,8 @@ public class SaveData{
 	}
 	
 	
-	public SaveData() {
-		MatrixUsed mu = new MatrixUsed();
+	public SaveData(int h) {
+		mu = new MatrixUsed();
 		File ratings = Play.application().getFile(
 				Play.application().configuration().getString("rate_dir"));
 		data = tabulateMovieLensData(ratings);
