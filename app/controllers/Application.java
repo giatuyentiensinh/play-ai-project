@@ -111,18 +111,12 @@ public class Application extends Controller {
 	}
 
 	public static Result getdata() {
-
 		List<JsonNode> result = new ArrayList<JsonNode>();
-
 		MatrixUsed mu = new MatrixUsed();
-
 		File ratings = Play.application().getFile(
 				Play.application().configuration().getString("rate_dir"));
-
 		RatingTable data = tabulateMovieLensData(ratings);
-
 		mu.computeMatrix(data, numCrossFolds, sampleFold);
-
 		for (int k = 10; k < mu.sVD.rank() / 4; k = k + 10) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
@@ -143,9 +137,7 @@ public class Application extends Controller {
 				averageOfUser.put(new Integer(i), new Double(sumRatingsOfUser
 						/ mu.numItem));
 			}
-
 			rd.addTrainingData(matrixA, mu, averageOfUser);
-
 			// if (predictAgainstBaseline)
 			// rd.subtractBaseline();
 			rd.computeItemSimilarities(maxNeighbors, raterSimilarityMeasure);

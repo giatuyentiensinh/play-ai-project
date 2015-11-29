@@ -1,0 +1,26 @@
+{
+  "name": "ai-project",
+  "homepage": "https://github.com/giatuyentiensinh/play-ai-project",
+  "authors": [
+    "Tuyen Nguyen Gia <giatuyentiensinh@gmail.com>"
+  ],
+  "description": "UI, Angularjs, chart",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "angularjs",
+    "chart"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-chart.js": "~0.8.6"
+  }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<title>AI Project</title>
+		<link rel="stylesheet" type="text/css" href="bower_components/angular-chart.js/dist/angular-chart.min.css" />
+	</head>
+	<body ng-controller="LineCtrl">
+
+		<canvas id="line" class="chart chart-line" chart-data="data"
+		  chart-labels="labels" chart-legend="true" chart-series="series"
+		  chart-click="onClick" >
+		</canvas> 
+
+
+		<script type="text/javascript" src="bower_components/Chart.js/Chart.min.js"></script>
+		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+		<script type="text/javascript" src="scripts/main.js"></script>
+	</body>
+</html>
