@@ -16,9 +16,9 @@
 		<div class="container">
 
 			<div class="row">
-				<div class="col s6 m6 l6">
+				<div class="col s4 m4 l4">
 					<form ng-submit="submit()">
-						<legend>Search film</legend>
+						<legend>Search film recommender</legend>
 						<div class="input-field"> 
 							<div class="form-group">
 								<label class="control-label">Id người dùng</label>
@@ -27,14 +27,22 @@
 							</div>
 						</div>
 						
-						<button type="submit" class="btn">Gửi</button>
+						<button type="submit" class="btn">Tìm <i class="mdi-action-search right"></i></button>
+						<button type="reset" class="btn red darken-4" ng-click="clean()">Clean <i class="mdi-navigation-refresh right"></i></button>
 					</form>				
 				</div>
 
-				<div class="col s6 m6 l6">				
+				<div class="col s4 m4 l4">				
 					<ul class="collection with-header">
 						<li class="collection-item"> <h4>Danh sách films {{user}}</h4></li>
 						<li class="collection-item" ng-repeat="item in items">{{item}}</li>
+					</ul>
+				</div>
+
+				<div class="col s4 m4 l4">				
+					<ul class="collection with-header">
+						<li class="collection-item"> <h4>Danh sách films {{user}}</h4></li>
+						<li class="collection-item" ng-repeat="item in items2">{{item}}</li>
 					</ul>
 				</div>
 				
