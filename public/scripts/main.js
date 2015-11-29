@@ -7,8 +7,8 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 			var RMSE = [];
 
 			for (var i = 0; i < data.length; i++) {
-				k.put(data[i].k);
-				RMSE.put(data[i].RMSE);
+				k.push(data[i].k);
+				RMSE.push(data[i].RMSE);
 			};
 
 			$scope.labels = k;
