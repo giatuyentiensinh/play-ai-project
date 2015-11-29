@@ -105,9 +105,14 @@ public class MatrixUsed {
 		for (int i = 0; i < numUser; i++) {
 			for (int j = 0; j < numItem; j++) {
 				if (arrayRatings[i][j] == 0) {
-					arrayRatings[i][j] = rd.geometricMeanBaseline(
+					double t = rd.geometricMeanBaseline(
 							userMatrixIndex.get(new Integer(i + 1)),
 							itemMatrixIndex.get(new Integer(j + 1)));
+					if(t>5){
+						arrayRatings[i][j] = 5;
+					} else{
+						arrayRatings[i][j] = t;
+					}
 				}
 			}
 		}

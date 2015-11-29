@@ -1,6 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 
@@ -114,15 +116,15 @@ public class RatingDictionary {
 
 	public double predict(String rater, String item, int numRaterNeighbors) {
 		if (userMatrixId.containsKey(rater) && itemMatrixId.containsKey(item)) {
-			int indexRater = userMatrixId.get(rater);
-			int indexItem = itemMatrixId.get(item);
+			int indexRater = userMatrixId.get(rater) -1;
+			int indexItem = itemMatrixId.get(item) - 1;
 			Integer index = new Integer(indexRater);
-			if (!raterNeighbors.containsKey(index - 1)) {
+			if (!raterNeighbors.containsKey(index)) {
 				System.out.println("index no raterNeighbors: "
 						+ index.intValue());
 			}
 			ArrayList<SimilarityTable.Similarity> similarities = raterNeighbors
-					.get(index - 1).similarities;
+					.get(index).similarities;
 			if (similarities.isEmpty()) {
 				// No similar entities... default to rater baseline
 				return averageOfUser.get(index);
@@ -138,10 +140,54 @@ public class RatingDictionary {
 					denomator1 += Math.abs(s.value);
 				}
 				if (denomator1 != 0)
-					return averageOfUser.get(index - 1).doubleValue()
+					return averageOfUser.get(index).doubleValue()
 							+ numerator1 / denomator1;
 			}
 		}
 		return 0;
 	}
+	
+	public RatingTable predictTestData2(RatingTable data,
+			Method predictionMethod, int numItemNeighbors,
+			int numRaterNeighbors, int sampleFold, int numCrossFolds,
+			boolean printPredictions) {
+		RatingTable result = new RatingTable(null,
+				RatingTable.CommonAttribute.NONE);
+
+		for (Rating r : data.getRatings()) {
+			if (r.seq % numCrossFolds == sampleFold) {
+				double p = predict2(r.rater, r.item, numRaterNeighbors);
+				if (printPredictions) {
+					System.out
+							.println("r.rater: "
+									+ r.rater
+									+ " r.item: "
+									+ r.item
+									+ "predict of "
+									+ arrayMatrix[userMatrixId.get(r.rater)
+											.intValue() - 1][itemMatrixId.get(r.item).intValue()-1] + " to -> " + p);
+				}
+				Rating prediction = new Rating(r.rater, r.item, p);
+				result.addRating(prediction);
+			}
+		}
+		return result;
+	}
+
+	private double predict2(String rater, String item, int numRaterNeighbors) {
+		if (userMatrixId.containsKey(rater) && itemMatrixId.containsKey(item)) {
+			return arrayMatrix[userMatrixId.get(rater).intValue()-1][itemMatrixId.get(item).intValue()-1];
+		}
+		return 0;
+	}
+	
+	public Collection<Rating> getItemRecommendations(String rater, Method method, int numNeighbors) {
+        ArrayList<Rating> result = new ArrayList<Rating>();
+        for (int i = 0; i < numitem; i++) {
+			double t = predict(rater, itemMatrixIndex.get(new Integer(i) + 1), numNeighbors);
+			result.add(new Rating(rater, itemMatrixIndex.get(new Integer(i) + 1), t));
+		}
+        Collections.sort(result, Rating.Comp);
+        return result;
+    }
 }
