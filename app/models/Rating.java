@@ -8,7 +8,9 @@ import java.util.Comparator;
  */
 public class Rating {
 
-	// lưu số các đánh giá và đưa cho chúng id duy nhất
+	/**
+	 * lưu số các đánh giá và đưa cho chúng id duy nhất
+	 */
 	static int ct = 0;
 
 	/**
@@ -18,7 +20,9 @@ public class Rating {
 		ct = 0;
 	}
 
-	// tên của người đánh giá
+	/**
+	 * tên của người đánh giá
+	 */
 	public final String rater;
 	public final String item;
 	/** Đánh giá (Có thể là sau khi normalized) */

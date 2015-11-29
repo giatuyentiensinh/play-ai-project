@@ -11,22 +11,16 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 		});
 
 	$scope.submit = function() {
-		console.log($scope.film);
-		$http.post('/handerfilm', {
-			filmName: $scope.film
+		$http.post('/searchfilm', {
+			iduser: $scope.iduser
 		}).success(function(data) {
 			console.log(data);
 		}).error(function(res) {
 			console.log(res);
 		});
+
 		console.log("submit");
 	};
-
-	// $http.get('/tuyen')
-	// 	.success(function(data) {
-	// 		$scope.labels = data.RMSE;
-	// 		$scope.data = [data.k, data.k];
-	// 	});
 
   // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   // $scope.series = ['Series A'];

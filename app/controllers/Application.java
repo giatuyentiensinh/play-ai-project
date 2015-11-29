@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import models.MatrixUsed;
 import models.Rating;
 import models.RatingDictionary;
 import models.RatingTable;
+import play.Logger;
 import play.Play;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -82,7 +84,6 @@ public class Application extends Controller {
 		RatingTable result = new RatingTable(null,
 				RatingTable.CommonAttribute.NONE);
 		BufferedReader input = null;
-
 		try {
 			input = new BufferedReader(new FileReader(ratings));
 			try {
@@ -97,14 +98,13 @@ public class Application extends Controller {
 			} finally {
 				input.close();
 			}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(">> " + numRatings + " ratings loaded...");
+		Logger.info(numRatings + " ratings loaded ...");
 
 		return result;
 
@@ -168,25 +168,22 @@ public class Application extends Controller {
 		return ok(node);
 	}
 
-	public static Result tuyen() {
-		List<Integer> k = new ArrayList<Integer>();
-		ArrayList<String> name = new ArrayList<String>();
+	public static Result search() {
+		RatingDictionary ratingDictionary = new RatingDictionary();
+		Collection<Rating> result = ratingDictionary.getItemRecommendations(
+				"111", predictionMethod, numItemNeighbors);
 
-		for (int i = 0; i < 10; i++) {
-			k.add(i * i);
-			name.add("gia tri i = " + (i + 1));
-		}
-
-		ObjectNode node = Json.newObject();
-		node.put("k", Json.toJson(k));
-		node.put("RMSE", Json.toJson(name));
-
-		return ok(node);
+		return ok(Json.toJson(result.size()));
 	}
 
-	public static Result handerFilm() {
+	public static Result searchFilm() {
 		JsonNode params = request().body().asJson();
-		String filmname = params.get("filmName").asText();
-		return ok(filmname);
+
+		String iduser = params.get("iduser").asText();
+		RatingDictionary ratingDictionary = new RatingDictionary();
+		Collection<Rating> result = ratingDictionary.getItemRecommendations(
+				iduser, predictionMethod, numItemNeighbors);
+
+		return ok(Json.toJson(result));
 	}
 }
