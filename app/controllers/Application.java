@@ -1,10 +1,5 @@
 package controllers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,8 +9,7 @@ import models.MatrixUsed;
 import models.Rating;
 import models.RatingDictionary;
 import models.RatingTable;
-import play.Logger;
-import play.Play;
+import models.SaveData;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -78,48 +72,11 @@ public class Application extends Controller {
 	/** Cách tính similarities giữa 2 rater */
 	static RatingTable.SimilarityMeasure raterSimilarityMeasure = RatingTable.SimilarityMeasure.PEARSON;
 
-	public static RatingTable tabulateMovieLensData(File ratings) {
-		int numRatings = 0;
-
-		RatingTable result = new RatingTable(null,
-				RatingTable.CommonAttribute.NONE);
-		BufferedReader input = null;
-		try {
-			input = new BufferedReader(new FileReader(ratings));
-			try {
-				String line = null; // not declared within while loop
-				while ((line = input.readLine()) != null) {
-					String words[] = line.split("	");
-					String critic = words[0];
-					double score = Double.parseDouble(words[2]);
-					result.addRating(new Rating(critic, words[1], score));
-					numRatings++;
-				}
-			} finally {
-				input.close();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Logger.info(numRatings + " ratings loaded ...");
-
-		return result;
-
-	}
-
 	public static Result getdata() {
-
 		List<Integer> item = new ArrayList<Integer>();
 		List<Double> RMSE = new ArrayList<Double>();
-
-		MatrixUsed mu = new MatrixUsed();
-		File ratings = Play.application().getFile(
-				Play.application().configuration().getString("rate_dir"));
-		RatingTable data = tabulateMovieLensData(ratings);
-		mu.computeMatrix(data, numCrossFolds, sampleFold);
+		RatingTable data = SaveData.getData();
+		MatrixUsed mu = SaveData.mu;
 		for (int k = 10; k < mu.sVD.rank() / 30; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
@@ -180,7 +137,7 @@ public class Application extends Controller {
 		JsonNode params = request().body().asJson();
 
 		String iduser = params.get("iduser").asText();
-		RatingDictionary ratingDictionary = new RatingDictionary();
+		RatingDictionary ratingDictionary = SaveData.rd;
 		Collection<Rating> result = ratingDictionary.getItemRecommendations(
 				iduser, predictionMethod, numItemNeighbors);
 
