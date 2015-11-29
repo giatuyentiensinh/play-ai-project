@@ -3,15 +3,38 @@
 	<head>
 		<title>AI Project</title>
 		<link rel="stylesheet" type="text/css" href="bower_components/angular-chart.js/dist/angular-chart.min.css" />
+		<link rel="stylesheet" type="text/css" href="bower_components/Materialize/dist/css/materialize.min.css">
 	</head>
-	<body ng-controller="LineCtrl">
+	<body ng-controller="LineCtrl" class="container">
+
+		<form action="" method="GET">
+			<legend>Form title</legend>
+			<div class="input-field"> 
+				<div class="form-group">
+					<label class="control-label" for="">Tên film</label>
+					<span class="help-block"></span>
+					<input type="text" class="form-control" placeholder="Nhập tên film">
+				</div>
+			</div>
+			
+			<button type="submit" class="btn">Gửi</button>
+		</form>
+
+		<ul class="collection with-header">
+			<li class="collection-item"> <h4>Danh sách films</h4></li>
+			<li class="collection-item">Alvin</li>
+			<li class="collection-item">Alvin</li>
+			<li class="collection-item">Alvin</li>
+		</ul>
+
 
 		<canvas id="line" class="chart chart-line" chart-data="data"
 		  chart-labels="labels" chart-legend="true" chart-series="series"
 		  chart-click="onClick" >
 		</canvas> 
 
-
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
 		<script type="text/javascript" src="bower_components/Chart.js/Chart.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>

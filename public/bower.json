@@ -21,6 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-chart.js": "~0.8.6"
+    "angular-chart.js": "~0.8.6",
+    "Materialize": "materialize#~0.97.3"
   }
 }
