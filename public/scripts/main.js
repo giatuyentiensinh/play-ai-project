@@ -3,16 +3,8 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 
 	$http.get('/data')
 		.success(function(data) {
-			var k = [];
-			var RMSE = [];
-
-			for (var i = 0; i < data.length; i++) {
-				k.push(data[i].k);
-				RMSE.push(data[i].RMSE);
-			};
-
-			$scope.labels = k;
-			$scope.data = RMSE;
+			$scope.labels = data.k;
+			$scope.data = [data.RMSE, data.RMSE];
 		})
 		.error(function(resp) {
 			console.log('error server');

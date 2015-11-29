@@ -111,13 +111,16 @@ public class Application extends Controller {
 	}
 
 	public static Result getdata() {
-		List<JsonNode> result = new ArrayList<JsonNode>();
+
+		List<Integer> item = new ArrayList<Integer>();
+		List<Double> RMSE = new ArrayList<Double>();
+
 		MatrixUsed mu = new MatrixUsed();
 		File ratings = Play.application().getFile(
 				Play.application().configuration().getString("rate_dir"));
 		RatingTable data = tabulateMovieLensData(ratings);
 		mu.computeMatrix(data, numCrossFolds, sampleFold);
-		for (int k = 10; k < mu.sVD.rank() /30 ; k = k + 5) {
+		for (int k = 10; k < mu.sVD.rank() / 30; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
 			double[] sigVal = mu.sVD.getSingularValues();
@@ -151,14 +154,18 @@ public class Application extends Controller {
 			System.out
 					.println("RMSE of predictions against actual ratings: ( k = "
 							+ k + ") " + p.getDistance(data));
+
+			item.add(k);
+			RMSE.add(p.getDistance(data));
 			// output.println(k + "::" + p.getDistance(data));
 
-			ObjectNode node = Json.newObject();
-			node.put("k", k);
-			node.put("RMSE", p.getDistance(data));
-			result.add(node);
 		}
-		return ok(Json.toJson(result));
+
+		ObjectNode node = Json.newObject();
+		node.put("k", Json.toJson(item));
+		node.put("RMSE", Json.toJson(RMSE));
+
+		return ok(node);
 	}
 
 	public static Result tuyen() {
