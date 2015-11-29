@@ -14,20 +14,20 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 		$http.post('/searchfilm', {
 			iduser: $scope.iduser
 		}).success(function(data) {
-			console.log(data);
+			// console.log(data);
+			$scope.user = 'gợi ý cho người dùng ' +  data.userid;
+			var films = data.films;
+			$scope.items = [];
+
+			for (var i = 0; i < 10; i++) {
+				$scope.items.push(films[i]);
+			};
 		}).error(function(res) {
 			console.log(res);
 		});
 
-		console.log("submit");
 	};
 
-  // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  // $scope.series = ['Series A'];
-  // $scope.data = [
-  //   [65, 59, 80, 81, 56, 55, 40],
-  //   [28, 48, 40, 19, 86, 27, 90]
-  // ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };

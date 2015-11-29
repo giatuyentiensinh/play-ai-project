@@ -10,7 +10,6 @@ import models.Rating;
 import models.RatingDictionary;
 import models.RatingTable;
 import models.SaveData;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -78,11 +77,6 @@ public class Application extends Controller {
 		List<Double> RMSE = new ArrayList<Double>();
 		RatingTable data = SaveData.getData();
 		MatrixUsed mu = SaveData.mu;
-		if(mu==null){
-			Logger.error( " mu == null!!!");
-		} else{
-			Logger.error( " mu.numUser: " + mu.numUser);
-		}
 		for (int k = 10; k < mu.sVD.rank() / 30; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
@@ -143,9 +137,20 @@ public class Application extends Controller {
 
 		String iduser = params.get("iduser").asText();
 		RatingDictionary ratingDictionary = SaveData.rd;
+
 		Collection<Rating> result = ratingDictionary.getItemRecommendations(
 				iduser, predictionMethod, numItemNeighbors);
 
-		return ok(Json.toJson(result));
+		MatrixUsed matrixUser = SaveData.mu;
+		ArrayList<String> films = new ArrayList<String>();
+		result.forEach(item -> {
+			films.add(matrixUser.itemIndex.get(item.item));
+		});
+
+		ObjectNode node = Json.newObject();
+		node.put("films", Json.toJson(films));
+		node.put("userid", iduser);
+		
+		return ok(node);
 	}
 }

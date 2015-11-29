@@ -7,28 +7,36 @@
 	</head>
 	<body ng-controller="LineCtrl" class="container">
 
-		<form ng-submit="submit()">
-			<legend>Search film</legend>
-			<div class="input-field"> 
-				<div class="form-group">
-					<label class="control-label">Nhập id</label>
-					<span class="help-block"></span>
-					<input type="text" class="form-control" ng-model="iduser" required>
-				</div>
+		<div class="row">
+			<div class="col s6 m6 l6">
+				<form ng-submit="submit()">
+					<legend>Search film</legend>
+					<div class="input-field"> 
+						<div class="form-group">
+							<label class="control-label">Nhập id</label>
+							<span class="help-block"></span>
+							<input type="text" class="form-control" ng-model="iduser" required>
+						</div>
+					</div>
+					
+					<button type="submit" class="btn">Gửi</button>
+				</form>
+				
 			</div>
-			
-			<button type="submit" class="btn">Gửi</button>
-		</form>
+			<div class="col s6 m6 l6">
+				
+				<ul class="collection with-header">
+					<li class="collection-item"> <h4>Danh sách films {{user}}</h4></li>
+					<li class="collection-item" ng-repeat="item in items">{{item}}</li>
+				</ul>
+			</div>
+		</div>
 
-		<ul class="collection with-header">
-			<li class="collection-item"> <h4>Danh sách films</h4></li>
-			<li class="collection-item">Alvin</li>
-		</ul>
 
 
 		<canvas id="line" class="chart chart-line" chart-data="data"
 		  chart-labels="labels" chart-series="series"
-		  chart-click="onClick" >
+		   >
 		</canvas> 
 
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
