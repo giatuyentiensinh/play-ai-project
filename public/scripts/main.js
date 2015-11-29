@@ -6,7 +6,11 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 	$http.get('/data')
 		.success(function(data) {
 			$scope.labels = data.k;
-			$scope.data = [data.RMSE, data.RMSE];
+			$scope.data = [data.RMSE, data.RMSE2];
+			$scope.series = ['RMSE', 'RMSE2'];
+
+			$scope.data2 = [data.MAE, data.MAE2];
+			$scope.series2 = ['MAE', 'MAE2'];
 			$scope.check = false;
 		})
 		.error(function(resp) {
