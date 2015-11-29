@@ -1,10 +1,13 @@
 "use strict";
 angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $http) {
 
+	$scope.check = true;
+
 	$http.get('/data')
 		.success(function(data) {
 			$scope.labels = data.k;
 			$scope.data = [data.RMSE, data.RMSE];
+			$scope.check = false;
 		})
 		.error(function(resp) {
 			console.log('error server');
@@ -28,7 +31,4 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 
 	};
 
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
 });

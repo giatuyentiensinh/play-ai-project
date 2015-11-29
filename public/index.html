@@ -5,39 +5,96 @@
 		<link rel="stylesheet" type="text/css" href="bower_components/angular-chart.js/dist/angular-chart.min.css" />
 		<link rel="stylesheet" type="text/css" href="bower_components/Materialize/dist/css/materialize.min.css">
 	</head>
-	<body ng-controller="LineCtrl" class="container">
+	<body ng-controller="LineCtrl">
 
-		<div class="row">
-			<div class="col s6 m6 l6">
-				<form ng-submit="submit()">
-					<legend>Search film</legend>
-					<div class="input-field"> 
-						<div class="form-group">
-							<label class="control-label">Nhập id</label>
-							<span class="help-block"></span>
-							<input type="text" class="form-control" ng-model="iduser" required>
+		<nav style="margin-bottom: 25px;" class="indigo darken-4">
+			<div class="nav-wrapper">
+				<a class="brand-logo" style="padding-left: 15px;">AI PROJECT</a>
+			</div>
+		</nav>
+
+		<div class="container">
+
+			<div class="row">
+				<div class="col s6 m6 l6">
+					<form ng-submit="submit()">
+						<legend>Search film</legend>
+						<div class="input-field"> 
+							<div class="form-group">
+								<label class="control-label">Id người dùng</label>
+								<span class="help-block"></span>
+								<input type="text" class="form-control" ng-model="iduser" required>
+							</div>
 						</div>
+						
+						<button type="submit" class="btn">Gửi</button>
+					</form>				
+				</div>
+
+				<div class="col s6 m6 l6">				
+					<ul class="collection with-header">
+						<li class="collection-item"> <h4>Danh sách films {{user}}</h4></li>
+						<li class="collection-item" ng-repeat="item in items">{{item}}</li>
+					</ul>
+				</div>
+				
+			</div>
+			
+			<div class="preloader-wrapper big active " ng-show="check">
+				<div class="spinner-layer spinner-blue">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
 					</div>
-					
-					<button type="submit" class="btn">Gửi</button>
-				</form>
-				
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			
+				<div class="spinner-layer spinner-red">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			
+				<div class="spinner-layer spinner-yellow">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			
+				<div class="spinner-layer spinner-green">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
 			</div>
-			<div class="col s6 m6 l6">
-				
-				<ul class="collection with-header">
-					<li class="collection-item"> <h4>Danh sách films {{user}}</h4></li>
-					<li class="collection-item" ng-repeat="item in items">{{item}}</li>
-				</ul>
-			</div>
+
+
+			<canvas id="line" class="chart chart-line" chart-data="data"
+			  chart-labels="labels" chart-series="series">
+			</canvas> 
 		</div>
-
-
-
-		<canvas id="line" class="chart chart-line" chart-data="data"
-		  chart-labels="labels" chart-series="series"
-		   >
-		</canvas> 
 
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
