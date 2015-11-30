@@ -80,7 +80,7 @@ public class Application extends Controller {
 		List<Double> MAE2 = new ArrayList<Double>();
 		RatingTable data = SaveData.getData();
 		MatrixUsed mu = SaveData.mu;
-		for (int k = 5; k < mu.sVD.rank() / 40; k = k + 5) {
+		for (int k = 5; k < mu.sVD.rank() / 4; k = k + 5) {
 			RatingDictionary rd = RatingDictionary.addItems(mu.itemIndex);
 			Matrix U = mu.sVD.getU();
 			double[] sigVal = mu.sVD.getSingularValues();

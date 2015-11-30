@@ -33,7 +33,7 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $ht
 			$scope.items = [];
 			$scope.items2 = [];
 
-			for (var i = 0; i < 10; i++) {
+			for (var i = 0; i < 20; i++) {
 				$scope.items.push(films[i]);
 				$scope.items2.push(films2[i]);
 			};
